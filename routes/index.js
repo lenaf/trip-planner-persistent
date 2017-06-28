@@ -12,9 +12,10 @@ router.get('/', function(req, res, next) {
   ])
   .spread(function(dbHotels, dbRestaurants, dbActivities) {
     res.render('index', {
-      templateHotels: dbHotels,
-      templateRestaurants: dbRestaurants,
-      templateActivities: dbActivities
+      //edit the model imports using AJAX
+      // templateHotels: dbHotels,
+      // templateRestaurants: dbRestaurants,
+      // templateActivities: dbActivities
     });
   })
   .catch(next);
