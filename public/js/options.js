@@ -1,5 +1,4 @@
 'use strict';
-var Promise = require('bluebird');
 
 /* global $ tripModule attractionsModule hotels restaurants activities */
 
@@ -12,24 +11,6 @@ var Promise = require('bluebird');
  */
 
 //ajax trigger request just happens at the end of parsing the file
-
-
-// make promise for hotels, restaurants, activities
-var hotelsPromise = $.ajax({
-  method: 'GET',
-  url: '/api/hotels',
-});
-
-var restaurantsPromise = $.ajax({
-  method: 'GET',
-  url: '/api/restaurants',
-});
-
-var activitiesPromise = $.ajax({
-  method: 'GET',
-  url: '/api/activities',
-});
-
 
 $(function () {
   //on page ready, ajax request from our hotels api to get hotels then make options out of em
@@ -70,12 +51,19 @@ $(function () {
     });
 
   // // request all of the days
-  // $.ajax({
-  //   method: 'GET',
-  //   url: '/api/days'
-  // })
-  //   .then(function (data) { console.log('GET response data: ', data) })
-  //   .catch(console.error.bind(console));
+  $.ajax({
+    method: 'GET',
+    url: '/api/days'
+  })
+    .then(function (data) { console.log('GET response data: ', data) })
+    .catch(console.error.bind(console));
+
+  $.ajax({
+    method: 'POST',
+    url: '/api/days'
+  })
+    .then(function (data) { console.log('GET response data: ', data) })
+    .catch(console.error.bind(console));
 
   // jQuery selects
   var $optionsPanel = $('#options-panel');

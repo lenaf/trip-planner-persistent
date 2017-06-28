@@ -7,16 +7,35 @@
  * to add an attraction in the `options` module.
  */
 
+// make promise for hotels, restaurants, activities
+var hotelsPromise = $.ajax({
+  method: 'GET',
+  url: '/api/hotels',
+});
+
+var restaurantsPromise = $.ajax({
+  method: 'GET',
+  url: '/api/restaurants',
+});
+
+var activitiesPromise = $.ajax({
+  method: 'GET',
+  url: '/api/activities',
+});
+
+var enhanced;
+
 var attractionsModule = (function () {
 
   // application state
-
-  
-  var enhanced = {
-    hotels: hotels.map(attractionModule.create),
-    restaurants: restaurants.map(attractionModule.create),
-    activities: activities.map(attractionModule.create),
+Promise.all([hotelsPromise, restaurantsPromise, activitiesPromise])
+.then(function(array){
+  enhanced = {
+    hotels: array[0].map(attractionModule.create),
+    restaurants: array[1].map(attractionModule.create),
+    activities: array[2].map(attractionModule.create),
   };
+})
 
   // private helper methods (only available inside the module)
 
