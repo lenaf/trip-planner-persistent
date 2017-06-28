@@ -9,7 +9,53 @@
  * then tells the trip module to add the attraction.
  */
 
-$(function(){
+//ajax trigger request just happens at the end of parsing the file
+
+
+//make promise for hotels
+// var hotelsPromise = $.ajax({
+//   method: 'GET',
+//   url: '/api/hotels',
+// })
+
+
+$(function () {
+  //on page ready, ajax request from our hotels api to get hotels then make options out of em
+  $.ajax({
+    method: 'GET',
+    url: '/api/hotels'
+  })
+    .then(function (hotels) {
+      hotels.forEach(makeOption, $hotelSelect);
+    })
+    .catch(function (errorObj) {
+      console.log('im an error')
+    });
+
+
+  //request restaurants then make options out of em
+  $.ajax({
+    method: 'GET',
+    url: '/api/restaurants'
+  })
+    .then(function (restaurants) {
+      restaurants.forEach(makeOption, $restaurantSelect);
+    })
+    .catch(function (errorObj) {
+      console.log(errorObj)
+    });
+
+  //request activities then make options out of em
+  $.ajax({
+    method: 'GET',
+    url: '/api/activities'
+  })
+    .then(function (activities) {
+      activities.forEach(makeOption, $activitySelect);
+    })
+    .catch(function (errorObj) {
+      console.log('im an error')
+    });
 
   // jQuery selects
   var $optionsPanel = $('#options-panel');
@@ -18,11 +64,8 @@ $(function(){
   var $activitySelect = $optionsPanel.find('#activity-choices');
 
   // make all the option tags (second arg of `forEach` is a `this` binding)
-  hotels.forEach(makeOption, $hotelSelect);
-  restaurants.forEach(makeOption, $restaurantSelect);
-  activities.forEach(makeOption, $activitySelect);
 
-  function makeOption (databaseAttraction) {
+  function makeOption(databaseAttraction) {
     var $option = $('<option></option>') // makes a new option tag
       .text(databaseAttraction.name)
       .val(databaseAttraction.id);

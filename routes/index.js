@@ -1,50 +1,52 @@
+//require in all our express stuff and our models
 var Promise = require('bluebird');
 var router = require('express').Router();
 var Hotel = require('../models').Hotel;
 var Restaurant = require('../models').Restaurant;
 var Activity = require('../models').Activity;
 
-// router.use('/api', require('./api/options'));
 
-router.get('/api/hotels', function(req, res, next){
-    console.log("HELLO!");
-    Hotel.findAll()
-    .then(function(foundHotels){
-        res.json(foundHotels);
+//route to get our hotels model
+router.get('/api/hotels', function (req, res, next) {
+  Hotel.findAll()
+    .then(function (foundHotels) {
+      res.json(foundHotels);
     }).catch(next);
 });
 
-router.get('/api/restaurants', function(req, res, next){
-    console.log("HELLO!");
-    Restaurant.findAll()
-    .then(function(foundRestaurants){
-        res.json(foundRestaurants);
+
+//route to get our restaurants model
+router.get('/api/restaurants', function (req, res, next) {
+  Restaurant.findAll()
+    .then(function (foundRestaurants) {
+      res.json(foundRestaurants);
     }).catch(next);
 });
 
-router.get('/api/activities', function(req, res, next){
-    console.log("HELLO!");
-    Activity.findAll()
-    .then(function(foundActivities){
-        res.json(foundActivities);
+//route to get our activities model
+router.get('/api/activities', function (req, res, next) {
+  Activity.findAll()
+    .then(function (foundActivities) {
+      res.json(foundActivities);
     }).catch(next);
 });
 
-router.get('/', function(req, res, next) {
+//route to get our main page
+router.get('/', function (req, res, next) {
   Promise.all([
     Hotel.findAll(),
     Restaurant.findAll(),
     Activity.findAll()
   ])
-  .spread(function(dbHotels, dbRestaurants, dbActivities) {
-    res.render('index', {
-      // edit the model imports using AJAX
-      // templateHotels: dbHotels,
-      // templateRestaurants: dbRestaurants,
-      // templateActivities: dbActivities
-    });
-  })
-  .catch(next);
+    .spread(function (dbHotels, dbRestaurants, dbActivities) {
+      res.render('index', {
+        // edit the model imports using AJAX
+        // templateHotels: dbHotels,
+        // templateRestaurants: dbRestaurants,
+        // templateActivities: dbActivities
+      });
+    })
+    .catch(next);
 });
 
 module.exports = router;
